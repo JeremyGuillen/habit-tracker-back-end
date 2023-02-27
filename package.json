@@ -1,0 +1,16 @@
+{
+  "dependencies": {
+    "aws-sdk": "^2.1323.0",
+    "uuid": "^9.0.0",
+    "yup": "^1.0.1"
+  },
+  "devDependencies": {
+    "@types/node": "^18.14.2",
+    "@typescript-eslint/eslint-plugin": "^5.53.0",
+    "@typescript-eslint/parser": "^5.53.0",
+    "esbuild": "^0.14.25",
+    "eslint": "^8.35.0",
+    "serverless-esbuild": "^1.25.0"
+  },
+  "name": "habit-tracker-api"
+}

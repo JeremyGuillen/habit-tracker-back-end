@@ -1,0 +1,78 @@
+service: habit-tracker-api
+frameworkVersion: '3'
+
+provider:
+  name: aws
+  profile: habit_tracker
+  stage: dev
+  runtime: nodejs14.x
+  environment:
+    user_pool_id: {Ref: CognitoUserPool}
+    client_id: {Ref: CognitoUserPoolClient}
+  iam:
+    role:
+      statements:
+        - Effect: "Allow"
+          Action:
+            - "dynamodb:PutItem"
+            - "dynamodb:GetItem"
+            - "dynamodb:DeleteItem"
+            - "dynamodb:Scan"
+            - "cognito-idp:AdminInitiateAuth"
+            - "cognito-idp:AdminCreateUser"
+            - "cognito-idp:AdminSetUserPassword"
+          Resource: "*"
+
+functions:
+  signUp:
+    handler: src/functions/auth.SignUp
+    events:
+      - httpApi:
+          path: "/auth/sign-up"
+          method: post
+
+plugins:
+  - serverless-esbuild
+
+resources:
+  Resources:
+    CognitoUserPool:
+      Type: AWS::Cognito::UserPool
+      Properties:
+        UserPoolName: dev-habit-tracker-user-pool
+        UsernameAttributes:
+          - email
+        AutoVerifiedAttributes:
+          - email
+        Schema:
+          - AttributeDataType: String
+            Mutable: true
+            Name: id_user
+            Required: false
+          - AttributeDataType: String
+            Mutable: true
+            Name: name
+            Required: false
+          - AttributeDataType: String
+            Mutable: true
+            Name: last_name
+            Required: false
+    
+    CognitoUserPoolClient:
+      Type: AWS::Cognito::UserPoolClient
+      Properties:
+        AccessTokenValidity: 1
+        ClientName: dev-habit-tracker-userpool-client
+        UserPoolId:
+          Ref: CognitoUserPool
+        ExplicitAuthFlows:
+          - ADMIN_NO_SRP_AUTH
+        GenerateSecret: false
+        RefreshTokenValidity: 3649
+        TokenValidityUnits:
+          AccessToken: "days"
+          RefreshToken: "days"
+
+custom:
+  cognito_client_id: 1lqehe05af3v6bnd7mmaq7o7lt
+  cognito_pool_id: us-east-1_pfhkExgjc
