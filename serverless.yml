@@ -30,6 +30,12 @@ functions:
       - httpApi:
           path: "/auth/sign-up"
           method: post
+  signIn:
+    handler: src/functions/auth.SignIn
+    events:
+      - httpApi:
+          path: "/auth/sign-in"
+          method: post
 
 plugins:
   - serverless-esbuild

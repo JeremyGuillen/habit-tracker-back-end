@@ -1,13 +1,13 @@
 import { BaseApi } from "../base-api";
 import { AdminCreateUserRequest } from "aws-sdk/clients/cognitoidentityserviceprovider";
-
-import { SignUpInputSchema } from "../../models/auth";
+import {APIGatewayProxyEvent} from 'aws-lambda'
+import { SignUpInputSchema, SignInInputSchema } from "../../models/auth";
 import { v4 } from "uuid";
 import * as AWS from "aws-sdk";
 
 const cognito = new AWS.CognitoIdentityServiceProvider();
 export class AuthApi extends BaseApi {
-  async SignUp(event) {
+  async SignUp(event: APIGatewayProxyEvent) {
     try {
       const body = this.getBody(event);
       await SignUpInputSchema.validate(body, { abortEarly: true });
@@ -58,6 +58,41 @@ export class AuthApi extends BaseApi {
         body: JSON.stringify({ message: "user created successfully" }),
         headers: this.headers,
       };
+    } catch (e) {
+      return this.handleError(e);
+    }
+  }
+
+  async signIn(event: APIGatewayProxyEvent) {
+    try {
+      const body = this.getBody(event);
+      await SignInInputSchema.validate(body, { abortEarly: true });
+      const {
+        email, password
+      } = body;
+      const {user_pool_id, client_id } = process.env;
+      const response = await cognito.adminInitiateAuth({
+        AuthFlow: 'ADMIN_NO_SRP_AUTH',
+        UserPoolId: user_pool_id as string,
+        ClientId: client_id as string,
+        AuthParameters: {
+          USERNAME: email,
+          PASSWORD: password,
+        },
+      }).promise();
+      if (response.AuthenticationResult) {
+        return {
+          statusCode: 200,
+          body: JSON.stringify(response.AuthenticationResult),
+          headers: this.headers,
+        };
+      } else {
+        return {
+          statusCode: 403,
+          body: JSON.stringify({message: 'Unauthorized'}),
+          headers: this.headers,
+        };
+      }
     } catch (e) {
       return this.handleError(e);
     }
