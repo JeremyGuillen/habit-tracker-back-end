@@ -7,6 +7,7 @@ export class HabitApi extends BaseApiCRUD {
 
   public async get(event: APIGatewayProxyEvent): Promise<APIGatewayProxyResult> {
     try {
+        console.log(event.headers);
         const id_habit = event.pathParameters?.id_habit;
         return super.get({id_habit});
     } catch (e) {
@@ -35,6 +36,11 @@ export class HabitApi extends BaseApiCRUD {
 
   public async post(event: APIGatewayProxyEvent): Promise<APIGatewayProxyResult> {
     try {
+      const claims = this.getUserAttributes(event);
+      return {
+        statusCode: 200,
+        body: JSON.stringify(claims ?? {message: "Could not find user attributes"}),
+      }
       let habit = this.getBody(event);
       habit = {...habit, id_habit: v4()}
       return super.post(habit);

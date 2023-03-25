@@ -225,4 +225,17 @@ export class BaseApiCRUD {
 
     throw error;
   }
+
+  protected getUserAttributes(event: APIGatewayProxyEvent) {
+    if (!event.requestContext.authorizer || !event.requestContext.authorizer.jwt.claims) {
+      return null;
+    }
+    const claims = event.requestContext.authorizer.jwt.claims
+    const attributes = {
+      email: claims.email,
+      name: `${claims['custom:name']} ${claims['custom:last_name']}`,
+      id_user: claims['custom:id_user']
+    };
+    return attributes;
+  }
 }

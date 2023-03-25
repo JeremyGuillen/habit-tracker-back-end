@@ -22,6 +22,14 @@ provider:
             - "cognito-idp:AdminCreateUser"
             - "cognito-idp:AdminSetUserPassword"
           Resource: "*"
+  httpApi:
+    authorizers:
+      jwtAuthorizerhabit:
+        type: jwt
+        identitySource: $request.header.Authorization
+        issuerUrl: https://cognito-idp.us-east-1.amazonaws.com/${self:custom.cognito_pool_id}
+        audience:
+          - ${self:custom.cognito_client_id}
 
 functions:
   signUp:
@@ -42,6 +50,9 @@ functions:
       - httpApi:
           path: "/habit"
           method: post
+          authorizer:
+            name: jwtAuthorizerhabit
+          
   updateHabit:
     handler: src/functions/habits.updateHabit
     events:
@@ -127,11 +138,15 @@ resources:
       Properties:
         TableName: HabitTrackerHabitsTable
         AttributeDefinitions:
+          - AttributeName: id_user
+            AttributeType: S
           - AttributeName: id_habit
             AttributeType: S
         KeySchema:
-          - AttributeName: id_habit
+          - AttributeName: id_user
             KeyType: HASH
+          - AttributeName: id_habit
+            KeyType: RANGE
         ProvisionedThroughput:
           ReadCapacityUnits: 1
           WriteCapacityUnits: 1
