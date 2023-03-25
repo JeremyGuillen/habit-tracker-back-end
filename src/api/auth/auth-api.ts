@@ -1,12 +1,12 @@
-import { BaseApi } from "../base-api";
+import { BaseApiCRUD } from "../base-api";
 import { AdminCreateUserRequest } from "aws-sdk/clients/cognitoidentityserviceprovider";
 import {APIGatewayProxyEvent} from 'aws-lambda'
-import { SignUpInputSchema, SignInInputSchema } from "../../models/auth";
+import { SignUpInputSchema, SignInInputSchema, CreateUserSchema } from "../../models/auth";
 import { v4 } from "uuid";
 import * as AWS from "aws-sdk";
 
 const cognito = new AWS.CognitoIdentityServiceProvider();
-export class AuthApi extends BaseApi {
+export class AuthApi extends BaseApiCRUD {
   async SignUp(event: APIGatewayProxyEvent) {
     try {
       const body = this.getBody(event);
@@ -14,7 +14,7 @@ export class AuthApi extends BaseApi {
       const { email, password, name, last_name } = body;
       const userId = v4();
       const { user_pool_id } = process.env;
-      if (!user_pool_id) throw "Use pool is not defined"
+      if (!user_pool_id) throw "Use pool is not defined";
 
       const params: AdminCreateUserRequest = {
           UserPoolId: user_pool_id ,
@@ -52,12 +52,14 @@ export class AuthApi extends BaseApi {
       await cognito
         .adminSetUserPassword({ Password: password, UserPoolId: user_pool_id, Username: email, Permanent: true })
         .promise();
-
-      return {
-        statusCode: 200,
-        body: JSON.stringify({ message: "user created successfully" }),
-        headers: this.headers,
-      };
+      const user = {
+        email,
+        name,
+        last_name,
+        password,
+        id_user: userId,
+      }
+      return await  this.post(user);
     } catch (e) {
       return this.handleError(e);
     }
@@ -98,3 +100,5 @@ export class AuthApi extends BaseApi {
     }
   }
 }
+
+export const authApi = new AuthApi("HabitTrackerUsersTable", CreateUserSchema);

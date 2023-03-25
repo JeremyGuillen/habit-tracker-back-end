@@ -4,7 +4,7 @@ import * as yup from 'yup';
 import { DynamoDBController } from "../common/dynamodb-controller";
 import { HttpError } from "../models/http_error";
 export class BaseApi {
-  inputModel: yup.AnyObjectSchema;
+  inputModel: yup.ObjectSchema<any, any, any, any>;
   tableName: string;
   idKeyName: string;
   docClient: AWS.DynamoDB.DocumentClient;
@@ -54,12 +54,12 @@ export class BaseApi {
 }
 
 export class BaseApiCRUD {
-  inputModel: yup.AnyObjectSchema;
+  inputModel: yup.ObjectSchema<object>;
   tableName: string;
   headers: any;
   dynamoController: DynamoDBController;
 
-  constructor(tableName: string, inputModel: yup.AnyObjectSchema) {
+  constructor(tableName: string, inputModel: yup.ObjectSchema<object>) {
     this.inputModel = inputModel;
     this.tableName = tableName;
     this.dynamoController = new DynamoDBController(this.tableName);
