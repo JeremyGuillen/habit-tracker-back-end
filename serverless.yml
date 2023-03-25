@@ -79,6 +79,33 @@ resources:
           AccessToken: "days"
           RefreshToken: "days"
 
+    HabitTrackerUsers:
+      Type: AWS::DynamoDB::Table
+      Properties:
+        TableName: HabitTrackerUsersTable
+        AttributeDefinitions:
+          - AttributeName: id_user
+            AttributeType: S
+        KeySchema:
+          - AttributeName: id_user
+            KeyType: HASH
+        ProvisionedThroughput:
+          ReadCapacityUnits: 1
+          WriteCapacityUnits: 1
+    HabitTrackerHabits:
+      Type: AWS::DynamoDB::Table
+      Properties:
+        TableName: HabitTrackerHabitsTable
+        AttributeDefinitions:
+          - AttributeName: id_habit
+            AttributeType: S
+        KeySchema:
+          - AttributeName: id_habit
+            KeyType: HASH
+        ProvisionedThroughput:
+          ReadCapacityUnits: 1
+          WriteCapacityUnits: 1
+
 custom:
   cognito_client_id: 1lqehe05af3v6bnd7mmaq7o7lt
   cognito_pool_id: us-east-1_pfhkExgjc
