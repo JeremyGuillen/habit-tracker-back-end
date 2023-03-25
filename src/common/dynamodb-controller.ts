@@ -5,7 +5,7 @@ export class DynamoDBController {
     private tableName: string;
 
     constructor(tableName: string) {
-        this.docClient = new DynamoDB.DocumentClient();
+        this.docClient = new DynamoDB.DocumentClient({apiVersion: '2012-08-10'});
         this.tableName = tableName;
     }
 
@@ -36,12 +36,14 @@ export class DynamoDBController {
         }).promise();
     }
 
-    public async query(keyCondition: string, expressionAttributesValues: object, projectionExpression: string) {
+    public async query(keyCondition?: string, expressionAttributesValues?: object, filterCondition?: string,) {
+        console.log(keyCondition);
+        console.log(expressionAttributesValues);
         return await this.docClient.query({
             TableName: this.tableName,
-            KeyConditionExpression: keyCondition,
             ExpressionAttributeValues: expressionAttributesValues,
-            ProjectionExpression: projectionExpression,
+            KeyConditionExpression: keyCondition,
+            FilterExpression: filterCondition
         }).promise();
     }
 

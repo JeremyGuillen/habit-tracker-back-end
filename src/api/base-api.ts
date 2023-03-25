@@ -63,6 +63,9 @@ export class BaseApiCRUD {
     this.inputModel = inputModel;
     this.tableName = tableName;
     this.dynamoController = new DynamoDBController(this.tableName);
+    this.headers = {
+      "content-type": "application/json",
+    };
   }
 
   public async get(key: object): Promise<APIGatewayProxyResult> {
@@ -167,6 +170,24 @@ export class BaseApiCRUD {
         headers: this.headers,
       };
     } catch (e) {
+      return this.handleError(e);
+    }
+  }
+
+  public async filter(keyCondition?: string, expressionAttributesValues?: object, filterCondition?: string): Promise<APIGatewayProxyResult> {
+    try {
+      const response = await this.dynamoController.query(keyCondition, expressionAttributesValues, filterCondition);
+      const responseBody = {
+        items: response.Items ?? [],
+        total_items: response.Count ?? 0,
+      };
+      return {
+        statusCode: 200,
+        body: JSON.stringify(responseBody),
+        headers: this.headers,
+      }
+    } catch (e) {
+      console.log(e);
       return this.handleError(e);
     }
   }

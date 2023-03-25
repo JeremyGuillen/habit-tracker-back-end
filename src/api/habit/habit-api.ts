@@ -1,6 +1,6 @@
-import { CallTracker } from "assert";
 import { APIGatewayProxyEvent, APIGatewayProxyResult } from "aws-lambda";
 import { v4 } from 'uuid';
+import { FilterHabitSchema, HabitSchema } from "../../models/habits";
 import { BaseApiCRUD } from "../base-api";
 
 export class HabitApi extends BaseApiCRUD {
@@ -43,12 +43,20 @@ export class HabitApi extends BaseApiCRUD {
     }
   }
 
-  // public async filter(event: APIGatewayProxyEvent): Promise<APIGatewayProxyResult> {
-  //   try {
-  //     const body = this.getBody(event);
-
-  //   } catch (e) {
-  //     return this.handleError(e);
-  //   }
-  // }
+  public async filterItems(event: APIGatewayProxyEvent): Promise<APIGatewayProxyResult> {
+    try {
+      const body = this.getBody(event);
+      await FilterHabitSchema.validate(body, {abortEarly: true});
+      const expressionAttributes = {
+        ':user': body.id_user,
+      };
+      const filterExpression = "contains(id_user, :user)";
+      console.log(expressionAttributes);
+      return super.filter(undefined, expressionAttributes, filterExpression);
+    } catch (e) {
+      return this.handleError(e);
+    }
+  }
 }
+
+export const habitApi = new HabitApi("HabitTrackerHabitsTable", HabitSchema)

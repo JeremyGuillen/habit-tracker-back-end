@@ -36,6 +36,36 @@ functions:
       - httpApi:
           path: "/auth/sign-in"
           method: post
+  createHabit:
+    handler: src/functions/habits.createHabit
+    events:
+      - httpApi:
+          path: "/habit"
+          method: post
+  updateHabit:
+    handler: src/functions/habits.updateHabit
+    events:
+      - httpApi:
+          path: "/habit/{id_habit}"
+          method: put
+  getHabit:
+    handler: src/functions/habits.getHabit
+    events:
+      - httpApi:
+          path: "/habit/{id_habit}"
+          method: get
+  deleteHabit:
+    handler: src/functions/habits.deleteHabit
+    events:
+      - httpApi:
+          path: "/habit/{id_habit}"
+          method: delete
+  filterHabits:
+    handler: src/functions/habits.filterHabit
+    events:
+      - httpApi:
+          path: "/habit/filter"
+          method: post
 
 plugins:
   - serverless-esbuild
@@ -92,7 +122,7 @@ resources:
         ProvisionedThroughput:
           ReadCapacityUnits: 1
           WriteCapacityUnits: 1
-    HabitTrackerHabits:
+    HabitTrackerHabitsTable:
       Type: AWS::DynamoDB::Table
       Properties:
         TableName: HabitTrackerHabitsTable
