@@ -18,6 +18,7 @@ provider:
             - "dynamodb:GetItem"
             - "dynamodb:DeleteItem"
             - "dynamodb:Scan"
+            - "dynamodb:Query"
             - "cognito-idp:AdminInitiateAuth"
             - "cognito-idp:AdminCreateUser"
             - "cognito-idp:AdminSetUserPassword"
@@ -59,24 +60,32 @@ functions:
       - httpApi:
           path: "/habit/{id_habit}"
           method: put
+          authorizer:
+            name: jwtAuthorizerhabit
   getHabit:
     handler: src/functions/habits.getHabit
     events:
       - httpApi:
           path: "/habit/{id_habit}"
           method: get
+          authorizer:
+            name: jwtAuthorizerhabit
   deleteHabit:
     handler: src/functions/habits.deleteHabit
     events:
       - httpApi:
           path: "/habit/{id_habit}"
           method: delete
+          authorizer:
+            name: jwtAuthorizerhabit
   filterHabits:
     handler: src/functions/habits.filterHabit
     events:
       - httpApi:
           path: "/habit/filter"
           method: post
+          authorizer:
+            name: jwtAuthorizerhabit
 
 plugins:
   - serverless-esbuild

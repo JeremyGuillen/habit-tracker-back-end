@@ -8,5 +8,5 @@ export const HabitSchema = yup.object({
 });
 
 export const FilterHabitSchema = yup.object({
-    id_user: yup.string().required(),
+    id_habit: yup.string().required(),
 });
