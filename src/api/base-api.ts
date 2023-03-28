@@ -66,6 +66,8 @@ export class BaseApiCRUD {
     this.headers = {
       "content-type": "application/json",
     };
+    AWS.config.logger = console;
+
   }
 
   public async get(key: object): Promise<APIGatewayProxyResult> {
@@ -197,7 +199,7 @@ export class BaseApiCRUD {
     return JSON.parse(event.body);
   }
 
-  protected handleError(error: unknown) {
+  protected handleError(error: Error) {
     if (error instanceof yup.ValidationError) {
       return {
         statusCode: 400,
@@ -223,7 +225,11 @@ export class BaseApiCRUD {
       };
     }
 
-    throw error;
+    return {
+      statusCode: 500,
+      headers: this.headers,
+      body: JSON.stringify({error: error.message})
+    }
   }
 
   protected getUserAttributes(event: APIGatewayProxyEvent) {
