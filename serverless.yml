@@ -3,7 +3,6 @@ frameworkVersion: '3'
 
 provider:
   name: aws
-  profile: habit_tracker
   stage: dev
   runtime: nodejs14.x
   environment:
