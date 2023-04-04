@@ -19,3 +19,7 @@ export const deleteHabit = async (event) => {
 export const filterHabit = async (event) => {
     return habitApi.filterItems(event);
 }
+
+export const listHabits = async (event) => {
+    return habitApi.listHabits(event);
+}

@@ -72,6 +72,14 @@ export class HabitApi extends BaseApiCRUD {
       return this.handleError(e);
     }
   }
+
+  public async listHabits(event: APIGatewayProxyEvent): Promise<APIGatewayProxyResult> {
+    try {
+      return super.list();
+    } catch (e) {
+      return this.handleError(e);
+    }
+  }
 }
 
 export const habitApi = new HabitApi("HabitTrackerHabitsTable", HabitSchema)

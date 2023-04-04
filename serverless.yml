@@ -61,6 +61,14 @@ functions:
           method: put
           authorizer:
             name: jwtAuthorizerhabit
+  listHabits:
+    handler: src/functions/habits.listHabits
+    events:
+      - httpApi:
+          path: "/habit"
+          method: get
+          authorizer:
+            name: jwtAuthorizerhabit
   getHabit:
     handler: src/functions/habits.getHabit
     events:
