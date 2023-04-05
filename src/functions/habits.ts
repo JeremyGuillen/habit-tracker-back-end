@@ -23,3 +23,10 @@ export const filterHabit = async (event) => {
 export const listHabits = async (event) => {
     return habitApi.listHabits(event);
 }
+
+export const helloWorld = async (event) => {
+    return {
+        statusCode: 200,
+        body: JSON.stringify({message: "Hola mundo"})
+    }
+}

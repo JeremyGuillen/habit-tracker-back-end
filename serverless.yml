@@ -93,6 +93,12 @@ functions:
           method: post
           authorizer:
             name: jwtAuthorizerhabit
+  helloWorld:
+    handler: src/functions/habits.helloWorld
+    events:
+      - httpApi:
+          path: "/hello"
+          method: get
 
 plugins:
   - serverless-esbuild
