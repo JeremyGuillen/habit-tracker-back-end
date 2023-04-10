@@ -27,6 +27,6 @@ export const listHabits = async (event) => {
 export const helloWorld = async (event) => {
     return {
         statusCode: 200,
-        body: JSON.stringify({message: "Hola mundo"})
+        body: JSON.stringify({message: "Hola mundo 2"})
     }
 }
