@@ -103,7 +103,7 @@ export class BaseApiCRUD {
       const output = await this.dynamoController.list();
       return {
         statusCode: 200,
-        body: JSON.stringify(output.Items),
+        body: JSON.stringify({items: output.Items}),
         headers: this.headers,
       }
     } catch (e) {

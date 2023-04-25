@@ -1,0 +1,71 @@
+{
+    "pathParameters": {
+        "id_habit": "00e7154e-a903-467b-8272-50c7c88ee27a"
+    },
+    "isBase64Encoded": false,
+    "headers": {
+        "Accept": "text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8",
+        "Accept-Encoding": "gzip, deflate, sdch",
+        "Accept-Language": "en-US,en;q=0.8",
+        "Cache-Control": "max-age=0",
+        "CloudFront-Forwarded-Proto": "https",
+        "CloudFront-Is-Desktop-Viewer": "true",
+        "CloudFront-Is-Mobile-Viewer": "false",
+        "CloudFront-Is-SmartTV-Viewer": "false",
+        "CloudFront-Is-Tablet-Viewer": "false",
+        "CloudFront-Viewer-Country": "US",
+        "Host": "1234567890.execute-api.us-east-1.amazonaws.com",
+        "Upgrade-Insecure-Requests": "1",
+        "User-Agent": "Custom User Agent String",
+        "Via": "1.1 08f323deadbeefa7af34d5feb414ce27.cloudfront.net (CloudFront)",
+        "X-Amz-Cf-Id": "cDehVQoZnx43VYQb9j2-nvCh-9z396Uhbp027Y2JvkCPNLmGJHqlaA==",
+        "X-Forwarded-For": "127.0.0.1, 127.0.0.2",
+        "X-Forwarded-Port": "443",
+        "X-Forwarded-Proto": "https",
+        "Authorization": "Bearer eyJraWQiOiJMUGFjZFRxcHFIWjhxc0hreCtWV3dvZXdEU3d6c1FieFwvYTRaNkRHdFpOUT0iLCJhbGciOiJSUzI1NiJ9.eyJzdWIiOiJiNDdhNzI1Yi1kNWUxLTQ0YTAtYjVjMC0wMjkxMmU3ZTYzNjMiLCJpc3MiOiJodHRwczpcL1wvY29nbml0by1pZHAudXMtZWFzdC0xLmFtYXpvbmF3cy5jb21cL3VzLWVhc3QtMV9wZmhrRXhnamMiLCJjbGllbnRfaWQiOiIxbHFlaGUwNWFmM3Y2Ym5kN21tYXE3bzdsdCIsIm9yaWdpbl9qdGkiOiJlZjI0NzRmMC0xMGIzLTRhMTQtYWUzNi05YTMxNWFiZmI0NjkiLCJldmVudF9pZCI6ImM1OWUwOTlhLTgwMmUtNDMxNy05YzZiLTEzNmM3NjBmNmQwYyIsInRva2VuX3VzZSI6ImFjY2VzcyIsInNjb3BlIjoiYXdzLmNvZ25pdG8uc2lnbmluLnVzZXIuYWRtaW4iLCJhdXRoX3RpbWUiOjE2ODIyOTk2NjUsImV4cCI6MTY4MjM4NjA2NSwiaWF0IjoxNjgyMjk5NjY1LCJqdGkiOiI5OTE1MGY0Ni1iYmIzLTQ1YjMtODNjNC1hZmE3YjNjY2VkNjciLCJ1c2VybmFtZSI6ImI0N2E3MjViLWQ1ZTEtNDRhMC1iNWMwLTAyOTEyZTdlNjM2MyJ9.C3aRQGK7CclZ-MzJBEAtLckCNKBayxo6obaMtVHtX_3B4qMKmMFsbmvzopPebh9xih4JQt3OTClwGwgfaldFJPdNCHNbDuhZh4SF1t7C5ah6LVaOevfCgL_O-Sl3GTD0SGK0r3pb2LklijM3NmPiWAqe0GKypS3pkAad_ED1y7_Q7DXwHrGgaZJsufZiHAy7ZDxQQOo898bvI05nYKHgYpDb2nHmrcj-YQIt7LvcEMbaG0gPbvmrZpcXiaUz2qK6oL5iXESR946QUR4MP8Gf4vWEwNpYlFoZqZVS3Ha3_sN9NVCCPe5gST3DpaPfXhjg82PNuWBmJ2OHmzLMYwCRuA"
+    },
+    "requestContext": {
+        "accountId": "123456789012",
+        "resourceId": "123456",
+        "stage": "prod",
+        "requestId": "c6af9ac6-7b61-11e6-9a41-93e8deadbeef",
+        "requestTime": "09/Apr/2015:12:34:56 +0000",
+        "requestTimeEpoch": 1428582896000,
+        "identity": {
+            "cognitoIdentityPoolId": null,
+            "accountId": null,
+            "cognitoIdentityId": null,
+            "caller": null,
+            "accessKey": null,
+            "sourceIp": "127.0.0.1",
+            "cognitoAuthenticationType": null,
+            "cognitoAuthenticationProvider": null,
+            "userArn": null,
+            "userAgent": "Custom User Agent String",
+            "user": null
+        },
+        "path": "/prod/path/to/resource",
+        "resourcePath": "/{proxy+}",
+        "httpMethod": "POST",
+        "apiId": "1234567890",
+        "protocol": "HTTP/1.1",
+        "http": {
+            "method": "POST",
+            "path": "/habit/filter",
+            "protocol": "HTTP/1.1",
+            "sourceIp": "186.32.16.80",
+            "userAgent": "PostmanRuntime/7.26.5"
+        },
+        "authorizer": {
+            "jwt": {
+                "claims": {
+                    "email": "guillenjeremy26@gmail.com",
+                    "custom:id_user": "0bf606b9-c5bf-4d86-a449-ded0bb904233",
+                    "custom:name": "Jeremy",
+                    "custom:last_name": "Guillen"
+                },
+                "scopes": null
+            }
+        }
+    }
+}
