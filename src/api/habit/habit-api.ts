@@ -39,7 +39,8 @@ export class HabitApi extends BaseApiCRUD {
           throw new Error("Missing required attributes");
         }
         const reqBody = this.getBody(event);
-        return super.put(reqBody, {id_habit: id_habit, id_user: attributes.id_user});
+        return {statusCode: 500, body: JSON.stringify({message: "Testing error message"})}
+        // return super.put(reqBody, {id_habit: id_habit, id_user: attributes.id_user});
     } catch (e) {
         return this.handleError(e);
     }
